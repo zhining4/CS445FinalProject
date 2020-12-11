@@ -5,6 +5,7 @@ import scipy
 import scipy.sparse.linalg
 import cv2
 from math import ceil, floor
+import os
 def poly2mask(vertex_row_coords, vertex_col_coords, shape):
     fill_row_coords, fill_col_coords = draw.polygon(vertex_row_coords, vertex_col_coords, shape)
     mask = np.zeros(shape, dtype=np.bool)
@@ -331,8 +332,8 @@ def align_images(input_img_1, input_img_2, pts_img_1, pts_img_2,
     #im2 = cv2.cvtColor(im2.astype(np.uint8), cv2.COLOR_RGB2BGR)
 
     if save_images:
-        output_img_1 = 'aligned_{}'.format(os.path.basename(input_img_1))
-        output_img_2 = 'aligned_{}'.format(os.path.basename(input_img_2))
+        output_img_1 = 'aligned1.jpg'
+        output_img_2 = 'aligned2.jpg'
         cv2.imwrite(output_img_1, im1)
         cv2.imwrite(output_img_2, im2)
 
