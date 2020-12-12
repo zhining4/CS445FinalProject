@@ -119,8 +119,8 @@ def specify_mask(img):
 
 def get_mask(ys, xs, img):
     mask = poly2mask(ys, xs, img.shape[:2]).astype(int)
-    fig = plt.figure()
-    plt.imshow(mask, cmap='gray')
+#     fig = plt.figure()
+#     plt.imshow(mask, cmap='gray')
     return mask
 
 
@@ -180,15 +180,10 @@ def solve_constrain(im, mask, bg_im, bg_ul, neq):
                     b[e] = im[y][x] - im[y+1][x]
                     e += 1
   
-    print("finish preprocess")
     v = scipy.sparse.linalg.lsqr(A, b)
     
     result = np.array(v[0], dtype = float).reshape(im_h, im_w)
     
-    # for i in range(im_h):
-    #     for j in range(im_w):
-    #         if (pointer[i][j] < 0):
-    #             result[i][j] = bg_im[i+bg_ul[0]][j+bg_ul[1]]
     return result
 
 def poisson_blend(object_img, object_mask, bg_img, bg_ul):
@@ -213,7 +208,6 @@ def poisson_blend(object_img, object_mask, bg_img, bg_ul):
     for i in range(im_h):
         for j in range(im_w):
             bg[i+bg_ul[0]][j+bg_ul[1]] = result[i][j]
-    print("poisson done")
     return bg
 
 def align_images(input_img_1, input_img_2, pts_img_1, pts_img_2,
@@ -222,8 +216,8 @@ def align_images(input_img_1, input_img_2, pts_img_1, pts_img_2,
     # Load images
     im1 = input_img_1.copy()
     im2 = input_img_2.copy()
-    plt.figure()
-    plt.imshow(im1)
+#     plt.figure()
+#     plt.imshow(im1)
 
     # get image sizes
     h1, w1, b1 = im1.shape
@@ -304,7 +298,7 @@ def align_images(input_img_1, input_img_2, pts_img_1, pts_img_2,
     M[1, 2] += (nH / 2) - rows/2
 
     im1 = cv2.warpAffine(im1, M, (nW, nH))
-    plt.imshow(im1)
+#     plt.imshow(im1)
 
     # Crop images (on both sides of border) to be same height and width
     h1, w1, b1 = im1.shape
